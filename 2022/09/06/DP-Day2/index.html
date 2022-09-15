@@ -420,7 +420,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><font face="STCAIYUN" size="7" color="#A52A2A">第一题</font><br>给定一个包含非负整数的 m x n 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。<br>说明：每次只能向下或者向右移动一步。<br><img src="/images/DP3.jpg" alt="最小路径和"><br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtcz3i/">https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtcz3i/</a>  </p>
+                <p><font face="微软雅黑" size="7" color="#A52A2A">第一题</font><br>给定一个包含非负整数的 m x n 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。<br>说明：每次只能向下或者向右移动一步。<br><img src="/images/DP3.jpg" alt="最小路径和"><br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtcz3i/">https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtcz3i/</a>  </p>
 <p><strong>思路</strong>大致和DP1的思想一致：<br>1、先定义状态f[m][n]<br>2、找出状态转移函数<br>ps.最重要的就是搞清楚<del>状态定义</del>！！f[m][n]意味着什么？f[m-1][n]又意味着什么？它们之间的关系为什么是这样？搞清楚状态定义基本上解决了这种题目。<br><em>比较简单，直接看代码吧</em></p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -522,8 +522,101 @@
 <span class="token comment" spellcheck="true">//来源：力扣（LeetCode）</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <hr>
-<p><font face="STCAIYUN" size="7" color="#A52A2A">第二题</font><br>给定一个三角形 triangle ，找出自顶向下的最小路径和。<br>每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1<br><img src="/images/DP4.png" alt="最小路径和变形">  </p>
+<p><font face="微软雅黑" size="7" color="#A52A2A">第二题</font><br>给定一个三角形 triangle ，找出自顶向下的最小路径和。<br>每一步只能移动到下一行中相邻的结点上。相邻的结点 在这里指的是 下标 与 上一层结点下标 相同或者等于 上一层结点下标 + 1 的两个结点。也就是说，如果正位于当前行的下标 i ，那么下一步可以移动到下一行的下标 i 或 i + 1<br><img src="/images/DP4.png" alt="最小路径和变形"><br><a target="_blank" rel="noopener" href="https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtfiiv/">作者：宫水三叶，相关链接</a></p>
+<hr>
+<p><strong>初始思路</strong><br>1、使用dp[i][j]存储到[i][j]点的路径和<br>最终要求：i=m-1,j没有要求<br>在运动过程中j始终&lt;=i<br>2、使用二维数组f进行路径记录，f[index[dp]][line]<br>index[dp]表示哪一条路，line表示哪一层<br>不过由于路径多，如何唯一表示index？<br>能不能按累加定义index？<br>。。。<br>然后就卡住了<span class="github-emoji"><span>😅</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f605.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>。。</p>
+<p>没办法了，仔细看了上一题的解析终于知道为什么从后往前推更方便。。。<br>因为只存储最短路径（1条）的idx<br>所以从后往前推，不然得先存在一个数组里再输出（浪费空间）。。<br>不过三角形怎么从idx推出在哪一行哪一列、、、<br>要不开一个一维数组存储三角形的值算了、、、tri<br>完蛋，还是不会记录，不过三角形倒推就没有正推的问题<br>因为从下往上是唯一的，从上往下是不唯一的<br>然后写出来了下面的东西</p>
+<pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">int</span> <span class="token function">minimumTotal</span><span class="token punctuation">(</span>vector<span class="token operator">&lt;</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">>></span><span class="token operator">&amp;</span> triangle<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> idx<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//一维三角形数组的idx</span>
+        <span class="token keyword">int</span> line<span class="token operator">=</span>triangle<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> tri<span class="token punctuation">[</span><span class="token punctuation">(</span>line<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span>line<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> row<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>row<span class="token operator">&lt;</span>line<span class="token punctuation">;</span>row<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> col<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>col<span class="token operator">&lt;=</span>row<span class="token punctuation">;</span>col<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                tri<span class="token punctuation">[</span>idx<span class="token punctuation">]</span><span class="token operator">=</span>triangle<span class="token punctuation">[</span>row<span class="token punctuation">]</span><span class="token punctuation">[</span>col<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                idx<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token comment" spellcheck="true">//以上的最后没用上，是原来想输出路径（failed）写的</span>
+        <span class="token keyword">int</span> dp<span class="token punctuation">[</span>line<span class="token punctuation">]</span><span class="token punctuation">[</span>line<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>dp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>line<span class="token number">-1</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">--</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>j<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">==</span>line<span class="token number">-1</span><span class="token punctuation">)</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>triangle<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token keyword">else</span>
+                <span class="token punctuation">{</span>
+                    <span class="token keyword">int</span> up<span class="token punctuation">,</span>ulft<span class="token punctuation">;</span>
+                    <span class="token comment" spellcheck="true">//up=(j!=i)?dp[i+1][j]+triangle[i][j]:INT_MAX;</span>
+                    <span class="token comment" spellcheck="true">//ulft=(j!=0)?dp[i+1][j+1]+triangle[i][j]:INT_MAX;</span>
+                    up<span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>triangle<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    ulft<span class="token operator">=</span>dp<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>triangle<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">min</span><span class="token punctuation">(</span>up<span class="token punctuation">,</span>ulft<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后看评论，如何节约空间的方法：<br>因为对状态是如何转移不感兴趣，程序员在调试的时候感兴趣（debug）<br>由于用户不感兴趣，因此可以直接在原三角形上更改（？有点危险</p>
+<hr>
+<p>作者解析<br>本题是否可以使用DP解决，要分析<strong>有无后效性</strong><br>首先，既然是从上到下的路径，那么最后一个点必然是落在最后一行。<br>对于最后一行的某个位置的值，根据题意只能从上一行的<strong>某一个位置</strong>或者<strong>某两个位置之一</strong>转移而来。<br>同时，我们只关注前一位的累加值是多少，而不关心这个累加值结果是由什么路径而来的。<br>这显然就满足了「无后效性」的定义：我们转移某个状态需要用到某个值，但是并不关心该值是如何而来的。<br>更加的学术表达是：当前某个状态确定后，之后的状态转移与之前的决策无关</p>
+<p>既然可以使用DP解决该问题，那么我们就需要定义「DP状态」： f[i][j]代表到达某个点的最小路径和<br>状态转移：<br>1、每一行 i 具有 i+1 个数字<br>2、只要不是第一列（j!=0）位置上的数，都能通过「左上方」转移过来<br>3、只要不是每行最后一列（j!=i）位置上的数，都能通过「上方」转移而来</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">minimumTotal</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Integer<span class="token operator">>></span> tri<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> tri<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> ans <span class="token operator">=</span> Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> f <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        f<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> tri<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">int</span> val <span class="token operator">=</span> tri<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> f<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">!=</span> i<span class="token punctuation">)</span> f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> f<span class="token punctuation">[</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">+</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> ans <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>ans<span class="token punctuation">,</span> f<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<hr>
+<p><font size="5"><strong>进阶</strong></font><br>递推过程可以发现，在求第 i 行的状态时只依赖于第 i-1 行的状态。<br>那么我们不需要存储所有行的状态值（动规值），可以对空间进行优化。</p>
+<table><tbody><tr><td bgcolor="#1E90FF">DP 空间优化技巧</td></tr></tbody></table>
+1、滚动数组
+2、根据状态依赖调整迭代/循环的方向
+**滚动数组**没有任何的思维难度，只需要将其中一维直接改成 2，
+ 将维的 f[i] 改成 f[i&amp;1] 或者 f[i%2] 即可（推荐前者，在不同架构的机器上，运算效率更加稳定）。
+这样数组仅存储两行的内容，用完的数据就被覆盖掉
+```java
+class Solution {
+    public int minimumTotal(List<list<integer>&gt; tri) {
+        int n = tri.size();
+        int ans = Integer.MAX_VALUE;
+        int[][] f = new int[2][n];
+        f[0][0] = tri.get(0).get(0);
+        for (int i = 1; i &lt; n; i++) {
+            for (int j = 0; j &lt; i + 1; j++) {
+                int val = tri.get(i).get(j);
+                f[i &amp; 1][j] = Integer.MAX_VALUE;
+                if (j != 0) f[i &amp; 1][j] = Math.min(f[i &amp; 1][j], f[(i - 1) &amp; 1][j - 1] + val);
+                if (j != i) f[i &amp; 1][j] = Math.min(f[i &amp; 1][j], f[(i - 1) &amp; 1][j] + val);
+            }
+        }
+        for (int i = 0; i &lt; n; i++) ans = Math.min(ans, f[(n - 1) &amp; 1][i]);
+        return ans;
+    }
+}
+```
 
+
+
+</list<integer>
                 
             </div>
             <hr/>

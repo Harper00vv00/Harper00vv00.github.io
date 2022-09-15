@@ -420,7 +420,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><font face="STCAIYUN" size="7" color="#A52A2A">第一题</font><br>一个机器人位于一个 m x n&nbsp;网格的左上角 （起始点在下图中标记为 “Start” ）<br>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。<br>问总共有多少条不同的路径？<br><img src="/images/DP1.png" alt="question"><br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtwu06/">https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtwu06/</a>  </p>
+                <p><font face="微软雅黑" size="7" color="#A52A2A">第一题</font><br>一个机器人位于一个 m x n&nbsp;网格的左上角 （起始点在下图中标记为 “Start” ）<br>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。<br>问总共有多少条不同的路径？<br><img src="/images/DP1.png" alt="question"><br>链接：<a target="_blank" rel="noopener" href="https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtwu06/">https://leetcode.cn/leetbook/read/path-problems-in-dynamic-programming/rtwu06/</a>  </p>
 <p>初步的思路：3*7的地图，只能向右或者向下，总共走8步可以到终点，那么就要考虑右和下这两个动作在向量里的位置。<br>如下图所示，需要向右6步，向下2步，那么就计算2个下元素在向量中的位置（无序）。  </p>
 <table>
 <thead>
@@ -453,7 +453,7 @@
 <p>最后求和，得7*8/2=28<br><em><strong>不过这种思路很难找到通用的公式（哭）</strong></em>  </p>
 <hr>
 <p><strong>直接看解析！</strong><br>有人使用<strong>递归</strong>来解决，递归的关键是1.找到函数关系（把范围变小）2.找到递归结束条件<br>对于这道题来说，范围变小：每移动一步，地图就变小了  </p>
-<p><em>本讲重要知识点</em><br><font face="STCAIYUN" size="6" color="#006400">动态规划（DP）</font><br><strong>是什么？</strong>若要解一个给定问题，我们需要解其不同部分（即<strong>子问题</strong>），再<strong>合并子问题的解</strong>以得出原问题的解。通常许多子问题非常相似，为此动态规划法试图仅仅解决每个子问题一次，从而减少计算量： 一旦某个给定子问题的解已经算出，则将其<strong>记忆化存储</strong>，以便下次需要同一个子问题解之时直接查表。这种做法在重复子问题的数目关于输入的规模呈指数增长时特别有用。<br><strong>以下是作者宫水三叶对原题的分析</strong><br>定义 f[i][j]f[i][j] 为到达位置 (i,j)(i,j) 的不同路径数量。<br>那么 f[m-1][n-1]f[m−1][n−1] 就是我们最终的答案，而 f[0][0] = 1是一个显而易见的起始条件。<br>由于题目限定了我们只能<em>往下</em>或者<em>往右</em>移动，因此我们按照<strong>当前可选方向</strong>进行分析：<br>当前位置只能「往下」移动，即有 f[i][j] = f[i-1][j]<br>当前位置只能「往右」移动，即有 f[i][j] = f[i][j-1]<br>当前位置即能「往下」也能「往右」移动，即有 f[i][j] = f[i][j-1] + f[i-1][j]</p>
+<p><em>本讲重要知识点</em><br><font face="微软雅黑" size="6" color="#006400">动态规划（DP）</font><br><strong>是什么？</strong>若要解一个给定问题，我们需要解其不同部分（即<strong>子问题</strong>），再<strong>合并子问题的解</strong>以得出原问题的解。通常许多子问题非常相似，为此动态规划法试图仅仅解决每个子问题一次，从而减少计算量： 一旦某个给定子问题的解已经算出，则将其<strong>记忆化存储</strong>，以便下次需要同一个子问题解之时直接查表。这种做法在重复子问题的数目关于输入的规模呈指数增长时特别有用。<br><strong>以下是作者宫水三叶对原题的分析</strong><br>定义 f[i][j]f[i][j] 为到达位置 (i,j)(i,j) 的不同路径数量。<br>那么 f[m-1][n-1]f[m−1][n−1] 就是我们最终的答案，而 f[0][0] = 1是一个显而易见的起始条件。<br>由于题目限定了我们只能<em>往下</em>或者<em>往右</em>移动，因此我们按照<strong>当前可选方向</strong>进行分析：<br>当前位置只能「往下」移动，即有 f[i][j] = f[i-1][j]<br>当前位置只能「往右」移动，即有 f[i][j] = f[i][j-1]<br>当前位置即能「往下」也能「往右」移动，即有 f[i][j] = f[i][j-1] + f[i-1][j]</p>
 <hr>
 <p><em>因为是好久没接触DP类型的题目，基本忘光，这里直接搬上作者对于这道题的总结</em>  </p>
 <ol>
@@ -469,7 +469,7 @@
 </li>
 </ol>
 <hr>
-<p><font face="STCAIYUN" size="6" color="#A52A2A">第二题</font><br>一个机器人位于一个&nbsp;m x n&nbsp;网格的左上角 （起始点在下图中标记为 “Start” ）。<br>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。<br>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？<br>网格中的障碍物和空位置分别用 1 和 0 来表示。<br><img src="/images/DP2.jpg" alt="question2">  </p>
+<p><font face="微软雅黑" size="6" color="#A52A2A">第二题</font><br>一个机器人位于一个&nbsp;m x n&nbsp;网格的左上角 （起始点在下图中标记为 “Start” ）。<br>机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish”）。<br>现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？<br>网格中的障碍物和空位置分别用 1 和 0 来表示。<br><img src="/images/DP2.jpg" alt="question2">  </p>
 <p>第二题是对第一题的巩固，就自己按第一题的思路做了一下。<br>以下是自己写的代码，注释是当时的思路和错误的地方：</p>
 <pre class="line-numbers language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -755,12 +755,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%A4%BE%E6%AD%BB/">
-                        <span class="chip bg-color">社死</span>
-                    </a>
-                    
                     <a href="/tags/%E8%B1%86%E7%93%A3/">
                         <span class="chip bg-color">豆瓣</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%A4%BE%E6%AD%BB/">
+                        <span class="chip bg-color">社死</span>
                     </a>
                     
                 </div>
